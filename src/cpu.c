@@ -1,5 +1,7 @@
-#include "cpu.h"
 #include <stdint.h>
+#include <string.h>
+
+#include "cpu.h"
 
 /* -- fetch helpers -- */
 static uint8_t fetch8(Cpu *cpu, const uint8_t *memory) {
@@ -202,6 +204,11 @@ static void daa(Cpu *cpu) {
 }
 
 /* -- cpu logic and cycle -- */
+void cpu_init(Cpu *cpu) {
+	memset(cpu, 0, sizeof(Cpu));
+	cpu->pad1 = 1; cpu->pad3 = 0; cpu->pad5 = 0;
+}
+
 void cpu_step(Cpu *cpu, uint8_t *memory) {
 	if (cpu->halted) {
 		return;
